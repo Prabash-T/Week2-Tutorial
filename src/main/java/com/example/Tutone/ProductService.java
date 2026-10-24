@@ -1,3 +1,4 @@
+
 package com.example.Tutone;
 
 import org.springframework.stereotype.Service;
@@ -8,27 +9,40 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
+
     private List<Product> products = new ArrayList<>();
     private Long nextId = 1L;
 
-    public List<Product> getAllProducts() {
-        return products;
+    public ProductService() {
+        products.add(new DigitalProduct(nextId++, "Clean Code (E-book)", 29.99,
+                "/downloads/clean-code.pdf", 4.2));
+
+
     }
+
     public Product addProduct(Product product) {
         product.setId(nextId++);
         products.add(product);
         return product;
     }
 
-    public Optional<Product> getProductById(Long Id) {
-        return products.stream().filter(p -> p.getId().equals(Id)).findFirst();
+    public Optional<Product> getProductById(Long id) {
+        return products.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst();
     }
 
-    public void deleteProductById(Long Id) {
-        products.removeIf(p -> p.getId().equals(Id));
+    public void deleteProductById(Long id) {
+        products.removeIf(p -> p.getId().equals(id));
     }
 
     public List<Product> findByName(String name) {
-        return products.stream().filter(p -> p.getName().contains(name)).toList();
+        return products.stream()
+                .filter(p -> p.getName().contains(name))
+                .toList();
+    }
+
+    public List<Product> getAllProducts() {
+        return products;
     }
 }
